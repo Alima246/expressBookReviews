@@ -40,15 +40,10 @@ public_users.get('/isbn/:isbn',function (req, res) {
  });
   
 // Get book details based on author
-// public_users.get('/author/:author',function (req, res) {
-//   //Write your code here
-//   return res.status(300).json({message: "Yet to be implemented"});
-// });
 public_users.get('/author/:author', function (req, res) {
     const author = req.params.author;
 
     // Find all books by the author
-    // const result = Object.values(books).filter(book => book.author.toLowerCase() === author.toLowerCase());
     const result = Object.keys(books)
         .filter(key => books[key].author.toLowerCase() === author.toLowerCase())
         .reduce((acc, key) => {
