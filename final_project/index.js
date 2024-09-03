@@ -11,14 +11,14 @@ app.use(express.json());
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
 
 app.use("/customer/auth/*", function auth(req, res, next) {
-    // Check if user is logged in and has valid access token
+    // Check if user is logged in and has a valid access token
     if (req.session.authorization) {
         let token = req.session.authorization['accessToken'];
         // Verify JWT token
-        jwt.verify(token, "access", (err, user) => {
+        jwt.verify(token, "access", (err, user) => { // Use the same secret key used for signing
             if (!err) {
                 req.user = user;
-                next(); // Proceed to the next middleware
+                next(); // Proceed to the next middleware or route handler
             } else {
                 return res.status(403).json({ message: "User not authenticated" });
             }
